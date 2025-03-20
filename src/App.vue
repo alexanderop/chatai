@@ -1,29 +1,26 @@
 <script setup lang="ts">
-// https://github.com/vueuse/head
-// you can use this to manipulate the document head in any components,
-// they will be rendered correctly in the html results with vite-ssg
-useHead({
-  title: 'Vitesse',
-  meta: [
-    {
-      name: 'description',
-      content: 'Opinionated Vite Starter Template',
-    },
-    {
-      name: 'theme-color',
-      content: () => isDark.value ? '#00aba9' : '#ffffff',
-    },
-  ],
-  link: [
-    {
-      rel: 'icon',
-      type: 'image/svg+xml',
-      href: () => preferredDark.value ? '/favicon-dark.svg' : '/favicon.svg',
-    },
-  ],
-})
+import { ref } from 'vue'
+
+// Sample Vue code to render in the iframe
+const sampleCode = ref(`
+  const { createApp } = Vue
+  const App = {
+    template: '<div>Hello from the Vue Playground! <button @click="count++">{{ count }}</button></div>',
+    data() {
+      return { count: 0 }
+    }
+  }
+  createApp(App).mount('#app')
+`)
+
+const theme = ref<'light' | 'dark'>('light')
 </script>
 
 <template>
-  <RouterView />
+  <div>
+    <button @click="theme = theme === 'light' ? 'dark' : 'light'">
+      Toggle Theme (Current: {{ theme }})
+    </button>
+    <Sandbox :code="sampleCode" :theme="theme" />
+  </div>
 </template>
